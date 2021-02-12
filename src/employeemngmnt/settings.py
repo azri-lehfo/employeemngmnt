@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'employees',
     'reports',
     'jobs',
+    'activities',
 ]
 
 MIDDLEWARE = [
@@ -173,3 +174,5 @@ LOGIN_URL = '/auth/login/'
 LOGOUT_REDIRECT_URL = '/auth/login/'
 
 SESSION_COOKIE_AGE = 1209600
+
+PAGINATION = 10

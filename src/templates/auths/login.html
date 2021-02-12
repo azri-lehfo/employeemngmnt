@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %} | Login{% endblock title %}
+
+{% block content %}
+    <div id="login">
+        <h3 class="text-center text-white pt-5">Login form</h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" action="" method="POST">
+                            {% csrf_token %}
+                            <h3 class="text-center">Login</h3>
+                            <div class="form-group">
+                                <label for="email" class="">E-mail:</label><br>
+                                {{ form.email }}
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="">{% trans "Password" %}:</label><br>
+                                {{ form.password }}
+                            </div>
+                            {% if form.errors %}
+                                <div class="form-group">
+                                    {% for error in form.non_field_errors %}
+                                        <span class="help-block text-danger">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="form-group form-button text-center">
+                                        <button type="submit" class="btn btn-primary">{% trans "Login" %}</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="text-left">
+                                        <a href="{% url 'auths:register' %}" >{% trans "Forgot Password" %}</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4">
+                                    <div id="register-link" class="text-right">
+                                        <a href="{% url 'auths:register' %}" >{% trans "Register" %}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
