@@ -80,7 +80,7 @@ class RegisterForm(FormExtraClassMixin, forms.ModelForm):
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['email', 'password']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -109,6 +109,7 @@ class RegisterForm(FormExtraClassMixin, forms.ModelForm):
         )
 
         user.set_password(cleaned_data['password'])
+        user.is_active = True
         user.save()
 
         return user

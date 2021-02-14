@@ -22,7 +22,7 @@ class Log(models.Model):
     user = models.ForeignKey(
         User,
         verbose_name=_("Created by"),
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         editable=False
     )
     employee_model = models.Q(app_label='employees', model='employee')

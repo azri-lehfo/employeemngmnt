@@ -26,6 +26,8 @@ class Employee(BaseModelMixin):
     job = models.ForeignKey(
         'jobs.Job',
         related_name='jobs',
+        null=True,
+        blank=True,
         on_delete=models.SET_NULL,
     )
 

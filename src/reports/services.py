@@ -70,4 +70,4 @@ def export_to_xlsx(name, columns, data):
 
     workbook.save(response)
 
-    return workbook
+    return response

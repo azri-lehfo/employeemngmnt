@@ -1,5 +1,4 @@
 from django.views.generic import View
-from django.http import JsonResponse
 
 from employees.models import Employee
 
@@ -43,17 +42,10 @@ class EmployeeExportView(View):
                 ]
                 data.append(row)
 
-            workbook = export_to_xlsx("Employee", columns, data)
-            status = "SUCCESS"
-            export_link = workbook
+            response = export_to_xlsx("Employee", columns, data)
+
+            return response
         except Exception as err:
             print("ERROR import ", err)
-            status = "FAIL"
-            export_link = None
 
-        response = {
-            'status': status,
-            'export_link': export_link
-        }
-
-        return JsonResponse(response)
+        return super().get(*args, **kwargs)

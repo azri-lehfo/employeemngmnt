@@ -50,7 +50,7 @@ class LogoutView(View):
         return reverse('index')
 
 
-class RegistraterView(CreateView):
+class RegisterView(CreateView):
     """ Register """
     template_name = 'auths/register.html'
     form_class = RegisterForm
