@@ -14,6 +14,19 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MASAKAPA_DIR = os.path.dirname(os.path.abspath(__file__))
+SRC_DIR = os.path.dirname(MASAKAPA_DIR)
+PROJECT_DIR = os.path.dirname(SRC_DIR)
+LOGS_DIR = os.path.join(PROJECT_DIR, 'logs')
+PUBLIC_DIR = os.path.join(PROJECT_DIR, 'public')
+STATIC_DIR = os.path.join(PUBLIC_DIR, 'static')
+MEDIA_DIR = os.path.join(PUBLIC_DIR, 'media')
+
+FOLDER_CREATION_CHECK = [LOGS_DIR, PUBLIC_DIR, STATIC_DIR, MEDIA_DIR]
+
+for FOLDER in FOLDER_CREATION_CHECK:
+    if not os.path.exists(FOLDER):
+        os.makedirs(FOLDER)
 
 
 # Quick-start development settings - unsuitable for production
@@ -37,6 +50,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.humanize',
+
+    'auths',
+    'utils',
+    'employees',
+    'reports',
+    'jobs',
+    'activities',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +69,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'auths.middleware.CurrentUserMiddleware',
 ]
 
 ROOT_URLCONF = 'employeemngmnt.urls'
@@ -54,14 +78,19 @@ ROOT_URLCONF = 'employeemngmnt.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'utils.context_processors.settings',
+            ],
+            'loaders': [
+                'django.template.loaders.filesystem.Loader',
+                'django.template.loaders.app_directories.Loader',
             ],
         },
     },
@@ -75,11 +104,15 @@ WSGI_APPLICATION = 'employeemngmnt.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'employeego',
+        'USER': 'employeego',
+        'PASSWORD': 'employeego',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'ATOMIC_REQUESTS': 'True',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -117,4 +150,29 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = MEDIA_DIR
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+SITE_NAME = 'Employee Management'
+SITE_ID = 1
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # this is default
+    'auths.backends.EmailBackend',
+)
+
+LOGIN_URL = '/auth/login/'
+LOGOUT_REDIRECT_URL = '/auth/login/'
+
+SESSION_COOKIE_AGE = 1209600
+
+PAGINATION = 10

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %} | Add Employee{% endblock title %}
+
+{% block content %}
+    <div id="register">
+        <div class="container">
+            <div id="register-row" class="row justify-content-center align-items-center">
+                <div id="register-column" class="col-md-6">
+                    <div id="register-box" class="col-md-12">
+                        <form id="register-form" class="form" action="" method="POST">
+                            {% csrf_token %}
+                            <h3 class="text-center">{% trans "Add Employee" %}</h3>
+                            <div class="form-group">
+                                {% include "partials/_form_input.html" with field=form.name %}
+                            </div>
+                            <div class="form-group">
+                                {% include "partials/_form_input.html" with field=form.dob %}
+                            </div>
+                            <div class="form-group">
+                                {% include "partials/_form_input.html" with field=form.job %}
+                            </div>
+                            <div class="form-group">
+                                {% include "partials/_form_input.html" with field=form.salary %}
+                            </div>
+
+                            {% if form.errors %}
+                                <div class="form-group">
+                                    {% for error in form.non_field_errors %}
+                                        <span class="help-block text-danger">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1">
+                                    <div class="form-group form-button text-center">
+                                        <button type="submit" class="btn btn-primary">{% trans "Save" %}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

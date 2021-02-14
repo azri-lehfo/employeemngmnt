@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %} | {% trans "Job Detail" %}{% endblock title %}
+
+{% block content %}
+    <h4>Detail for {{ object.title }}</h4><br />
+
+    <table class="table">
+        <tr>
+            <th>{% trans "Title" %}</th>
+            <td>{{ object.title }}.</td>
+        </tr>
+        <tr>
+            <th>{% trans "Description" %}</th>
+            <td>{{ object.description }}.</td>
+        </tr>
+        <tr>
+            <th>{% trans "Min Salary" %}</th>
+            <td>{{ object.min_salary }}.</td>
+        </tr>
+        <tr>
+            <th>{% trans "Max Salary" %}</th>
+            <td>{{ object.max_salary }}.</td>
+        </tr>
+    </table><br />
+
+    <a class="btn btn-primary" href="{% url 'jobs:edit' object.pk %}">
+        {% trans "Edit" %}
+    </a>
+{% endblock content %}
+
