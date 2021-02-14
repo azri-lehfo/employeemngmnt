@@ -3,7 +3,7 @@ from datetime import datetime
 from django.http import HttpResponse
 
 from openpyxl import Workbook
-from openpyxl.styles import Font, Alignment, Border, Side, PatternFill
+from openpyxl.styles import Font, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
 
@@ -37,12 +37,6 @@ def export_to_xlsx(name, columns, data):
         title=name,
         index=1,
     )
-    # Define the background color of the header cells
-    fill = PatternFill(
-        start_color="CCC",
-        end_color="CCC",
-        fill_type='solid',
-    )
     row_num = 1
 
     # Assign values, styles, and formatting for each cell in the header
@@ -52,7 +46,6 @@ def export_to_xlsx(name, columns, data):
         cell.font = header_font
         cell.border = border_bottom
         cell.alignment = centered_alignment
-        cell.fill = fill
         # set column width
         column_letter = get_column_letter(col_num)
         column_dimensions = worksheet.column_dimensions[column_letter]

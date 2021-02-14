@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %} | {% trans "Job" %}{% endblock title %}
+
+{% block second_navbar %}
+<div class="sticky-top">
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse" id="navbar2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item {% if ordering == 'latest' %}active{% endif %}">
+                    <a href="?ordering=latest" class="nav-link">{% trans "Latest" %}</a>
+                </li>
+                <li class="nav-item {% if ordering == 'oldest' %}active{% endif %}">
+                    <a href="?ordering=oldest" class="nav-link">{% trans "Oldest" %}</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+                <a class="btn btn-primary" href="{% url 'jobs:create' %}">
+                    {% trans "Add new job" %}
+                </a>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+                <a class="btn btn-secondary"
+                href="{% url 'reports:jobs' %}?{% for key, value in request.GET.items %}{{key}}={{value}}{% endfor %}"
+                target="_blank">
+                    {% trans "Export" %}
+                </a>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" method="GET" action="">
+                <input class="form-control mr-sm-2" type="search" name="search" placeholder="{% trans 'Search' %}" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans 'Search' %}</button>
+            </form>
+        </div>
+    </nav>
+</div>
+{% endblock second_navbar %}
+
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+            <th>{% trans "No." %}</th>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "Description" %}</th>
+            <th>{% trans "Min Salary" %}</th>
+            <th>{% trans "Max Salary" %}</th>
+            <th>{% trans "Created at" %}</th>
+            <th>{% trans "Link" %}</th>
+        </thead>
+        <tbody>
+            {% for object in objects %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ object.title }}</td>
+                    <td>{{ object.description }}</td>
+                    <td>{{ object.min_salary }}</td>
+                    <td>{{ object.max_salary }}</td>
+                    <td>{{ object.created_at }}</td>
+                    <td>
+                        <a href="{% url 'jobs:detail' object.pk %}" title="View detail">
+                            <i class="material-icons">search</i>
+                        </a>
+                        <a href="{% url 'jobs:edit' object.pk %}" title="Edit">
+                            <i class="material-icons">edit</i>
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr class="danger">
+                    <td colspan="7" class="text-center">{% trans "No job found." %}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
+

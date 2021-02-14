@@ -69,12 +69,14 @@ class RegisterForm(FormExtraClassMixin, forms.ModelForm):
         max_length=200,
         min_length=8,
         required=True,
+        help_text="Alphanumeric. At least 8 characters.",
         widget=forms.PasswordInput(),
     )
     confirm_password = forms.CharField(
         max_length=200,
         min_length=8,
         required=True,
+        help_text="Retype password",
         widget=forms.PasswordInput(),
     )
 

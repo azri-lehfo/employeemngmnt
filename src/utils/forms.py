@@ -20,6 +20,8 @@ class FormExtraClassMixin(object):
 
             if isinstance(field, forms.DateField):
                 added_class += " datepicker"
+                print("sisisisisisi")
+                self.fields[name].widget.attrs['type'] = "date"
 
             if isinstance(field.widget, forms.widgets.Select):
                 added_class += " core-select2"

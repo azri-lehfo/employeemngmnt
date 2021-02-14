@@ -4,5 +4,11 @@
 {% block title %} | Home{% endblock title %}
 
 {% block content %}
-    Nothing to see here, you can use the navigation bar to navigate to other pages.
+    {% if user.is_authenticated %}
+        Welcome {{ user.email }}. Your last login is on {{ user.last_login }}
+    {% else %}
+        Nothing to see here, you can
+        <a href="{% url 'auths:login' %}">login</a> or <a href="{% url 'auths:register' %}">register</a>
+        and use the navigation bar to navigate to other pages.
+    {% endif %}
 {% endblock content %}

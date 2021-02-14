@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %} | {% trans "Employee Detail" %}{% endblock title %}
+
+{% block content %}
+    <h4>Detail for {{ object.name }}</h4><br />
+
+    <table class="table">
+        <tr>
+            <th>{% trans "Name" %}</th>
+            <td>{{ object.name }}.</td>
+        </tr>
+        <tr>
+            <th>{% trans "DOB" %}</th>
+            <td>{{ object.dob }}.</td>
+        </tr>
+        <tr>
+            <th>{% trans "Job" %}</th>
+            <td>{{ object.job.title }}.</td>
+        </tr>
+        <tr>
+            <th>{% trans "Salary" %}</th>
+            <td>{{ object.salary }}.</td>
+        </tr>
+    </table>
+{% endblock content %}
+

@@ -56,7 +56,7 @@ class JobCreateView(AbstractLoginRequiredMixin, AbstractView, CreateView):
     """
     Create new Job
     """
-    template_name = 'jobs/create.html'
+    template_name = 'jobs/form.html'
     header = _("Add New Job")
     model = Job
     form_class = JobForm
@@ -78,13 +78,12 @@ class JobCreateView(AbstractLoginRequiredMixin, AbstractView, CreateView):
             return self.form_invalid(form)
 
     def form_invalid(self, form):
-        messages.warning(self.request, form.errors)
         return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form):
         sid = transaction.savepoint()
         try:
-            self.object = form.save(create=True)
+            self.object = form.save()
             transaction.savepoint_commit(sid)
             messages.success(self.request, "Successfull create.")
         except Exception as err:
@@ -103,7 +102,7 @@ class JobUpdateView(AbstractLoginRequiredMixin, AbstractView, UpdateView):
     """
     Update Job
     """
-    template_name = 'jobs/create.html'
+    template_name = 'jobs/form.html'
     header = _("Update Job")
     model = Job
     form_class = JobForm
@@ -128,7 +127,6 @@ class JobUpdateView(AbstractLoginRequiredMixin, AbstractView, UpdateView):
             return self.form_invalid(form)
 
     def form_invalid(self, form):
-        messages.warning(self.request, form.errors)
         return self.render_to_response(self.get_context_data(form=form))
 
     def form_valid(self, form):

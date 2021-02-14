@@ -8,5 +8,6 @@ from .views import (
 app_name = 'reports'
 
 urlpatterns = [
-    path('', EmployeeExportView.as_view(), name='employees'),
+    path('employees/', EmployeeExportView.as_view(), name='employees'),
+    path('jobs/', EmployeeExportView.as_view(), name='jobs'),
 ]

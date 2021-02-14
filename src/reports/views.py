@@ -1,4 +1,5 @@
 from django.views.generic import View
+from django.http import HttpResponse
 
 from employees.models import Employee
 
@@ -23,11 +24,12 @@ class EmployeeExportView(View):
 
         try:
             columns = [
-                ('ID', 12),
+                ('ID', 40),
                 ('Name', 40),
                 ('DOB', 10),
                 ('Job Title', 40),
                 ('Salary', 12),
+                ('Created At', 10),
             ]
 
             data = []
@@ -39,6 +41,7 @@ class EmployeeExportView(View):
                     (employee.dob.strftime("%d-%m-%Y"), 'Normal'),
                     (employee.job.title, 'Normal'),
                     (str(employee.salary), 'Normal'),
+                    (employee.created_at.strftime("%d-%m-%Y"), 'Normal'),
                 ]
                 data.append(row)
 
@@ -48,4 +51,4 @@ class EmployeeExportView(View):
         except Exception as err:
             print("ERROR import ", err)
 
-        return super().get(*args, **kwargs)
+        return HttpResponse("ERROR")
