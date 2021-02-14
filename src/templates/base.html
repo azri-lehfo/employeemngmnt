@@ -55,16 +55,19 @@
                         <li class="nav-item {% if view_name == 'index' %}active{% endif %}">
                             <a class="nav-link" href="{% url 'index' %}">{% trans 'Home' %}</a>
                         </li>
-                        <li class="nav-item {% if view_name == 'employees:list' %}active{% endif %}">
+                        <li class="nav-item {% if 'employees:' in view_name %}active{% endif %}">
                             <a class="nav-link" href="{% url 'employees:list' %}">{% trans 'Employees' %}</a>
                         </li>
-                        <li class="nav-item {% if view_name == 'jobs:list' %}active{% endif %}">
+                        <li class="nav-item {% if 'jobs:' in view_name %}active{% endif %}">
                             <a class="nav-link" href="{% url 'jobs:list' %}">{% trans 'Jobs' %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'reports:trackings' %}" target="_blank">{% trans 'Export Tracking' %}</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
                         {% if request.user.is_authenticated %}
-                            <li class="nav-item dropdown {% if 'profiles:' in view_name or 'auths:' in view_name %}active{% endif %}">
+                            <li class="nav-item dropdown {% if 'auths:' in view_name %}active{% endif %}">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-user"></i> {{ request.user.username }}
                                 </a>

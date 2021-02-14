@@ -7,6 +7,7 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 
 from utils.views import AbstractView, AbstractLoginRequiredMixin
+from activities.services import create_view_log
 
 from .models import Job
 from .forms import JobForm
@@ -29,15 +30,18 @@ class JobListView(AbstractLoginRequiredMixin, AbstractView, ListView):
         if search:
             jobs = jobs.filter(title__icontains=search)
 
-        ordering = self.request.GET.get('ordering', 'latest')
-        if ordering == 'oldest':
-            jobs = jobs.order_by('created_at')
-
         kwargs['objects'] = jobs
+        kwargs['search'] = search
 
         context = super().get_context_data(**kwargs)
 
-        context['ordering'] = ordering
+        # Log everytime user access this page
+        if self.request.user.is_authenticated:
+            create_view_log(
+                user=self.request.user,
+                page="Job"
+            )
+
         return context
 
 

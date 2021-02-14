@@ -14,7 +14,7 @@ class AbstractView(object):
         context = super().get_context_data(**kwargs)
         context['header'] = self.header
 
-        # to use pagination, make sure context recipes is added before super
+        # to use pagination, make sure context objects is added before super
         if self.pagination and kwargs.get('objects'):
             paginator = Paginator(kwargs['objects'], settings.PAGINATION)
             page_number = self.request.GET.get('page')

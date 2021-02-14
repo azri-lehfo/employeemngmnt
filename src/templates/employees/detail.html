@@ -23,6 +23,10 @@
             <th>{% trans "Salary" %}</th>
             <td>{{ object.salary }}.</td>
         </tr>
-    </table>
+    </table><br />
+
+    <a class="btn btn-primary" href="{% url 'employees:edit' object.pk %}">
+        {% trans "Edit" %}
+    </a>
 {% endblock content %}
 

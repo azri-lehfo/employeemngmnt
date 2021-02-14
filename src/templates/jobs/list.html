@@ -11,20 +11,12 @@
         </button>
         <div class="navbar-collapse collapse" id="navbar2">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item {% if ordering == 'latest' %}active{% endif %}">
-                    <a href="?ordering=latest" class="nav-link">{% trans "Latest" %}</a>
-                </li>
-                <li class="nav-item {% if ordering == 'oldest' %}active{% endif %}">
-                    <a href="?ordering=oldest" class="nav-link">{% trans "Oldest" %}</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav mr-auto">
                 <a class="btn btn-primary" href="{% url 'jobs:create' %}">
                     {% trans "Add new job" %}
                 </a>
             </ul>
             <ul class="navbar-nav mr-auto">
-                <a class="btn btn-secondary"
+                <a class="btn btn-primary"
                 href="{% url 'reports:jobs' %}?{% for key, value in request.GET.items %}{{key}}={{value}}{% endfor %}"
                 target="_blank">
                     {% trans "Export" %}
@@ -32,7 +24,7 @@
             </ul>
             <form class="form-inline my-2 my-lg-0" method="GET" action="">
                 <input class="form-control mr-sm-2" type="search" name="search" placeholder="{% trans 'Search' %}" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">{% trans 'Search' %}</button>
+                <button class="btn btn-primary my-2 my-sm-0" type="submit">{% trans 'Search' %}</button>
             </form>
         </div>
     </nav>
@@ -51,7 +43,7 @@
             <th>{% trans "Link" %}</th>
         </thead>
         <tbody>
-            {% for object in objects %}
+            {% for object in pages %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
                     <td>{{ object.title }}</td>
@@ -74,6 +66,8 @@
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table><br />
+
+    {% include "partials/_pagination.html" %}
 {% endblock content %}
 

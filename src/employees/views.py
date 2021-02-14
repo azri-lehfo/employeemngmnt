@@ -7,6 +7,7 @@ from django.db import transaction
 from django.shortcuts import get_object_or_404
 
 from utils.views import AbstractView, AbstractLoginRequiredMixin
+from activities.services import create_view_log
 
 from .models import Employee
 from .forms import EmployeeForm
@@ -29,15 +30,18 @@ class EmployeeListView(AbstractLoginRequiredMixin, AbstractView, ListView):
         if search:
             employees = employees.filter(name__icontains=search)
 
-        ordering = self.request.GET.get('ordering', 'latest')
-        if ordering == 'oldest':
-            employees = employees.order_by('created_at')
-
         kwargs['objects'] = employees
+        kwargs['search'] = search
 
         context = super().get_context_data(**kwargs)
 
-        context['ordering'] = ordering
+        # Log everytime user access this page
+        if self.request.user.is_authenticated:
+            create_view_log(
+                user=self.request.user,
+                page="Employee"
+            )
+
         return context
 
 
