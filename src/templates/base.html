@@ -61,8 +61,8 @@
                         <li class="nav-item {% if 'jobs:' in view_name %}active{% endif %}">
                             <a class="nav-link" href="{% url 'jobs:list' %}">{% trans 'Jobs' %}</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'reports:trackings' %}" target="_blank">{% trans 'Export Tracking' %}</a>
+                        <li class="nav-item {% if 'reports:' in view_name %}active{% endif %}">
+                            <a class="nav-link" href="{% url 'reports:list' %}">{% trans 'Reports' %}</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %} | {% trans "Report" %}{% endblock title %}
+
+{% block content %}
+    <div class="row pt-5">
+        <div class="col-md-4">
+            <a class="btn btn-lg btn-outline-primary btn-block" href="{% url 'reports:employees' %}" target="_blank">
+                <i class="fa fa-save"></i><span class="pl-3 pr-3">Employee Report</span>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-lg btn-outline-primary btn-block" href="{% url 'reports:jobs' %}" target="_blank">
+                <i class="fa fa-save"></i><span class="pl-3 pr-3">Job Report</span>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-lg btn-outline-primary btn-block" href="{% url 'reports:trackings' %}" target="_blank">
+                <i class="fa fa-save"></i><span class="pl-3 pr-3">Tracking Report</span>
+            </a>
+        </div>
+    </div>
+
+{% endblock content %}
+

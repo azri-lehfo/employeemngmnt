@@ -1,12 +1,21 @@
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 from employees.models import Employee
 from jobs.models import Job
 from utils.views import AbstractLoginRequiredMixin
 
 from .services import export_to_xlsx
+
+
+class ReportListView(AbstractLoginRequiredMixin, TemplateView):
+    """
+    Report index
+    """
+    template_name = 'reports/list.html'
+    header = _("Reports")
 
 
 class EmployeeExportView(AbstractLoginRequiredMixin, View):
